@@ -1,80 +1,141 @@
-# CS 465 Project Two – Q-Learning Maze Solver
+# CS 465 — Full Stack Development  
+## Trip Planner Project
 
-## **Overview**
-This project focuses on implementing and training an AI agent using the **Q-learning** algorithm to navigate a maze. The goal is for the agent to learn the most efficient path to the exit by balancing exploration and exploitation over many training epochs.
+### **Overview**
+This project is a full-stack Trip Planner application built for CS 465. It uses an Angular Single Page Application (SPA) on the front end, Node.js + Express on the backend, Handlebars (`.hbs`) for server-side rendering, and MongoDB as the NoSQL database. JSON is used for transporting and storing data between layers.
 
----
-
-## **Work Completed in This Project**
-
-### **Provided Code**
-The starter code included:
-- A **QMaze** class used to create the maze environment  
-- Initialization of the maze layout  
-- Functions to reset the maze  
-- Structures for tracking the agent’s **score**, **state**, and **experience**
-
-### **My Contributions**
-I implemented the core **Q-training algorithm**. This included:
-
-- Running multiple **training epochs**, each starting with a maze reset  
-- Allowing the agent to run the maze repeatedly until it reached the goal  
-- Enabling **exploration vs. exploitation** behavior  
-- Updating the Q-values so the agent could improve its score and discover faster and more efficient paths  
-
-Through repeated cycles, the AI agent learned to make smarter decisions, gain more points, and complete the maze in fewer steps.
+The application demonstrates full-stack concepts including templating, routing, RESTful API design, dynamic data rendering, and endpoint testing.
 
 ---
 
-## **What Do Computer Scientists Do and Why Does It Matter?**
-
-Computer scientists design and build the technological systems that power our modern world. Their work includes:
-- Developing apps, websites, games, and software  
-- Creating tools that improve communication and accessibility  
-- Building AI systems that assist and enhance user experiences  
-
-Their contributions matter because they solve real-world problems and make everyday tasks easier—for example:
-- Video calling family across the world  
-- Ordering food or shopping online  
-- Using social media to stay connected  
-- Accessing AI assistance for learning, entertainment, or productivity  
-
-Computer scientists play a critical role in shaping how we interact with technology.
+## **Table of Contents**
+1. [Why HBS Instead of HTML](#why-hbs)
+2. [Architecture & Technologies](#architecture)
+3. [Data Flow: JSON vs JavaScript](#data-flow)
+4. [REST API Endpoints](#api)
+5. [Endpoint Testing](#testing)
+6. [Security Considerations](#security)
+7. [Refactoring & Design Improvements](#refactor)
+8. [Running the Project Locally](#run-project)
+9. [What I Learned](#learning)
+10. [License](#license)
 
 ---
 
-## **How I Approach Problems as a Computer Scientist**
+## **1. Why We Used HBS Instead of HTML** <a name="why-hbs"></a>
+We used Handlebars (`.hbs`) because it allows for **dynamic server-side rendering** and faster updates, without reloading the entire page. While HTML is static and does not interact with the backend directly, HBS lets us inject data into templates and reuse components efficiently.
 
-When faced with a problem, I follow a structured approach:
-
-1. **Define and understand the problem clearly**  
-   Identifying the goal ensures that my solution is focused and effective.
-
-2. **Break the problem into smaller, manageable pieces**  
-   This reduces complexity and makes it easier to implement.
-
-3. **Develop, test, and evaluate potential solutions**  
-   Testing helps confirm that the chosen approach works and meets requirements.
-
-4. **Reflect and improve**  
-   After solving the problem, I analyze the process, what I learned, and how I can apply the same techniques to future challenges.
+Originally, the project used plain HTML but was converted to HBS for:
+- Faster page rendering  
+- Better modularization  
+- Avoiding full-page reloads  
+- Cleaner separation of dynamic vs. static components  
 
 ---
 
-## **Ethical Responsibilities to Users and Organizations**
+## **2. Architecture & Technologies** <a name="architecture"></a>
 
-As a computer scientist, I have a responsibility to:
+### **Frontend**
+- Angular SPA  
+- Components load once and request data dynamically as the user interacts  
+- Some pages rendered with HBS templates when server-side rendering is needed  
 
-- Write safe and secure code  
-- Protect user privacy and handle data responsively  
-- Follow legal requirements and organizational policies  
-- Consider the user impact of the systems I build  
-- Ensure technology is designed responsibly and does not harm users  
+### **Backend**
+- Node.js + Express  
+- Handles API routes, middleware, and MongoDB connections  
+- Serves the SPA bundle  
 
-Ethics are essential to building trust and maintaining the integrity of both the project and the organization.
+### **Database**
+- MongoDB (NoSQL)  
+- Chosen for flexible structure and easy horizontal scaling  
+
+### **Data Transport**
+- JSON used to seed, retrieve, and update data  
+- JavaScript used across both front-end and back-end for seamless handling  
 
 ---
 
-## **Conclusion**
-This project helped me understand Q-learning on a deeper level and apply AI concepts in a real programming environment. Completing the training algorithm and watching the agent improve over time gave me hands-on experience with reinforcement learning, problem-solving, and responsible system design.
+## **3. Data Flow: JSON vs JavaScript** <a name="data-flow"></a>
+**JSON**  
+- A standardized text format storing key/value data  
+- Used for transferring data to/from the database  
+- Used to seed initial MongoDB collections  
 
+**JavaScript**  
+- Programming language used to manipulate data  
+- Makes API calls, updates UI, processes server logic  
+
+**How They Connect**  
+JSON stores data on the backend, and JavaScript retrieves this data and delivers dynamic content to the user without duplicate storage.
+
+---
+
+## **4. REST API Endpoints** <a name="api"></a>
+Example endpoints used in this project:
+
+GET /api/trips → List all trips
+GET /api/trips/:id → Get a single trip by ID
+POST /api/trips → Add a new trip
+PUT /api/trips/:id → Update trip information
+DELETE /api/trips/:id → Remove a trip
+
+
+These endpoints interface with MongoDB and allow the SPA to fetch data on demand.
+
+---
+
+## **5. Endpoint Testing** <a name="testing"></a>
+Testing was done using:
+- **Browser testing** → Checking endpoints directly through `http://localhost`
+- **Postman** → Sending manual GET/POST/PUT/DELETE requests  
+- **Error debugging** → Identifying issues such as:
+  - `404 Not Found` (wrong route or missing data)
+  - Database connection issues
+  - Bad request formatting
+
+Postman was especially helpful for confirming that each endpoint responded with correct JSON before integrating it with the frontend.
+
+---
+
+## **6. Security Considerations** <a name="security"></a>
+To protect users and the system:
+- Secure and clean coding practices  
+- Input validation and proper error handling  
+- Avoiding exposure of sensitive data or database credentials  
+- Using environment variables (e.g., `MONGO_URI`)  
+- Continuous testing of endpoints to ensure safe behavior  
+
+Security ensures both user trust and system stability.
+
+---
+
+## **7. Refactoring & Design Improvements** <a name="refactor"></a>
+During the project, I refactored the structure to improve readability and performance, including:
+
+- Converting HTML pages to HBS templates  
+- Moving data from inline code into JSON seed files  
+- Cleaning up logic and reducing duplicate code  
+- Restructuring the project as an SPA for better performance  
+- Storing trip data in MongoDB for scalable data retrieval  
+
+These changes made the codebase cleaner, easier to maintain, and faster to load.
+
+---
+
+
+
+This project taught me how full-stack systems connect and interact, including:
+
+Using frameworks like Angular, Express, and MongoDB
+
+Designing REST APIs and testing endpoints
+
+Managing data flow between frontend and backend
+
+Using HBS templating to improve performance
+
+Structuring projects for maintainability
+
+Understanding how SPAs load, fetch data, and update views
+
+Overall, this project gave me real experience building a complete web application from start to finish.
