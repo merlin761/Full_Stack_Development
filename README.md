@@ -1,7 +1,154 @@
- The reason why we used hbs instead of html is because it’s faster when loading the website. However, at the beginning of the project we used htlm but we had to convert it to hbs because it was better for the rendering speeds by not having to fully load every component of the site at each refresh. In addition, htlm is static and used as a client facing this is a good thing because it won’t interact with the back end. For the front and back end, we used java script to obtain trip information from the MongoDB database, so the page can change dynamically based on the user interaction as well, so we were able to show the data into the html files when the users viewed any data. New for the JSON files were used to move the data to MongoDB, now we did all this so we could retrieve the needed data while using Node Express when the client requested the page. In addition, for the SPA we used angular, and node and their differences are that they were built from different and separate files and assembling them into one unit so when the users go to the website that’s what they download. When the user goes and requests these specific files can be seen as the whole website but with no data on it, so whenever the users are looking or interacting, and they select something that needs data then the SPA obtains the data through the server from the database.
-The reason why the backend uses a NoSQL MongoDB database is because it’s more flexible and easier when it comes to its data structure in addition to its quick scale horizontally because of its non-relational nature of the database.
-The way JSON is different from JavaScript is by JavaScript being more of a language that performs the operations on data while JSON is used to describe its content as key/value pairs as well JSON is more of a standardized way to format object data this makes JSON easy for JavaScript to obtain data. The way that JSON ties together the front end and backend development pieces is by making a way for JavaScript objects to be stored in the back end and use in different ways depending on what the users are requesting in the front end in addition the data doesn’t have to be stored multiple times in order to be pulled multiple times.
-Something I can remember when I refactored the code in order to improve its functionality so it can be more efficient was that I moved the website to an SPA in order for the website to be more readable that way that I did it was by using the hbs modules, the data was put into a JSON data structure which then I was able to  store it into a different and separate file and then so eventually the back-end MongoDB. This helped me to have a cleaner code and to reduce the file size etc.
-Some methods for requesting and retrieval necessitate various types of API testing of endpoints where that is the best and simplest way to test the endpoints before adding the security The first is by just going to the localhost where the web address is for the API endpoint to make sure the page successfully loaded the data or what type of error it gives you.  When I was doing the project, we used postman to test our https address and like I said on the previews journal I had an issue when I was testing it was throwing, I think it was a 404 error.
-My understanding of methods, endpoints, and security in a full stack application is that security is really important ensuring that you are suing authentication and verification on all you systems and data base is really critical so unauthorized guess aren’t able to access your data base or any important data, in addition to ensuring the users are able to have a good experience and using the best practices in order to obtain that is really important continuous testing is necessary to keep a website secure. Some of the best methods I can say are the GET, POST, PUT, and DELETE. These are the http requests that are used to retrieve or modify the database so that the functionality can be implemented. Now the endpoints are really important and it’s because they are the results of the methods as seen by the admin or the client side of the application, security is really important and continuous testing on the endpoints is really necessary so we can ensure they are displaying data correctly or if they are throwing errors. 
-I was so excited to take this class, and I can say it one of my favorites classes and it’s because I got to see how to build my first website and how to add different routes, indexes using different libraries and etc. this class has given me a good understanding of structure and guide me step by step now I can start building my own website I’m excited because I feel like I learned something important, useful and that I like that I’m able to use in my future endeavors.
+ This project is a full-stack Trip Planner web application built for CS 465. It uses an Angular single-page app (SPA) on the front end, Node + Express on the backend, Handlebars (.hbs) for server side rendering where appropriate, and MongoDB (NoSQL) for storing trip data. JSON is used to move and store data between layers. The app demonstrates dynamic data retrieval, RESTful API endpoints (GET / POST / PUT / DELETE), endpoint testing with Postman, and basic security/testing practices.
+
+Table of contents
+
+Why we used Handlebars (hbs) vs static HTML
+
+Architecture & technologies
+
+Data flow & formats (JSON vs JavaScript)
+
+API & common endpoints
+
+Testing endpoints & troubleshooting notes
+
+Security considerations
+
+Refactor / design decisions I made
+
+How to run the project locally
+
+What I learned / closing thoughts
+
+License
+
+Why we used Handlebars (hbs) instead of plain HTML <a name="why-hbs"></a>
+
+Performance & rendering flexibility: Handlebars lets us render templates faster because we only render components that need updating instead of fully reloading every page. That improved perceived load speed and made server-side rendered pieces easier to reuse.
+
+HTML is static; HBS is templated: Plain HTML is static and purely client-facing (useful when no backend interaction is required). HBS provides templating so we can inject data server-side and avoid re-downloading or re-rendering unrelated components on refresh.
+
+Architecture & technologies <a name="architecture"></a>
+
+Frontend: Angular SPA (downloads a single app bundle; obtains data later via API calls). Some pages/components are rendered using Handlebars templates for server-side rendering when appropriate.
+
+Backend: Node.js + Express — handles routes, APIs, and serves the SPA/static assets.
+
+Database: MongoDB (NoSQL) — chosen for flexible schema and easy horizontal scaling.
+
+Data transport: JSON files and payloads used for moving/importing data into MongoDB and for communication between front end and back end.
+
+Language: JavaScript used on both front and back ends for consistent data handling and for fetching trip info from the DB.
+
+Data flow & formats (JSON vs JavaScript) <a name="data-flow"></a>
+
+JSON is a standardized text format (key/value pairs) used to describe and transport data. We used JSON files to load and seed trip data into MongoDB and as the API payload format.
+
+JavaScript is the programming language that manipulates data, performs operations, and issues requests.
+
+How they tie together: JSON stores the objects in the backend; JavaScript (in both Angular and Node) reads/writes that JSON to present dynamic content to users. This avoids duplicated storage and allows the SPA to request only the data it needs when the user interacts.
+
+API & common endpoints <a name="api"></a>
+
+Typical RESTful endpoints used in the project (examples):
+
+GET   /api/trips            -> list trips (optionally with filters)
+GET   /api/trips/:id        -> get one trip by id
+POST  /api/trips            -> create a new trip
+PUT   /api/trips/:id        -> update trip data
+DELETE /api/trips/:id       -> remove a trip
+
+
+These endpoints are implemented in Express and interact with MongoDB.
+
+Use query parameters for filtering (e.g., /api/trips?city=Boston).
+
+Testing endpoints & troubleshooting notes <a name="testing"></a>
+
+I used Postman to test HTTPS endpoints and confirm responses.
+
+A simple first test is to open the endpoint in your browser (http://localhost:3000/api/trips) to see if JSON renders and to check for errors (404 / 500).
+
+If encountering 404:
+
+confirm the server is running,
+
+verify the route path matches the request,
+
+check that the DB connection is established and seeded with data.
+
+API testing order suggestion:
+
+Test GET list endpoint (basic connectivity).
+
+Test GET /:id with a known ID.
+
+Test POST to create a fixture record.
+
+Test PUT to update that fixture.
+
+Test DELETE to clean up.
+
+Security considerations <a name="security"></a>
+
+Always protect endpoints with proper authentication & authorization before exposing sensitive operations (especially POST/PUT/DELETE).
+
+Use environment variables for credentials (e.g., MONGO_URI) — never commit secrets to the repo.
+
+Validate and sanitize user input server-side to prevent injection attacks.
+
+Use HTTPS in production and rely on continuous testing (unit + endpoint tests) to catch regressions.
+
+Refactor / design decisions I made <a name="refactor"></a>
+
+Converted the site from multiple static HTML files to a cleaner SPA structure for maintainability and readability.
+
+Replaced repeated markup with Handlebars templates to reduce file size and duplication.
+
+Moved data into JSON structures and separate seed files so the backend could load them into MongoDB cleanly — this made the codebase easier to navigate and reduced clutter.
+
+As a result, the codebase is smaller, easier to debug, and the app responds faster to user interactions.
+
+How to run the project locally <a name="run-local"></a>
+
+Clone the repo:
+
+git clone <your-repo-url>
+cd <repo-folder>
+
+
+Install dependencies:
+
+npm install
+
+
+Set environment variables (example .env):
+
+PORT=3000
+MONGO_URI=mongodb://localhost:27017/tripplanner
+
+
+Seed the database (if a seed script exists):
+
+node scripts/seed.js
+
+
+Start the server:
+
+npm start
+
+
+In dev, you might run the front-end Angular dev server separately (if applicable):
+
+cd client
+npm install
+ng serve --open
+
+
+Test endpoints with Postman or by visiting:
+
+http://localhost:3000/api/trips
+
+What I learned / closing thoughts <a name="learned"></a>
+
+This class taught me how to design both frontend and backend pieces so they work together cleanly — templating (HBS), SPA design (Angular), REST APIs (Express), and flexible data modeling (MongoDB + JSON). I enjoyed building my first website, adding routes, and learning how to keep code maintainable by refactoring into templates and JSON seed data. This project gave me a toolkit I can now apply to future full-stack work.
